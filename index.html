@@ -1,0 +1,242 @@
+<!doctype html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DISTANTS — Welcome Home</title>
+  <meta name="description" content="DISTANTS — a free, nonprofit-intended public-benefit concierge resource." />
+  <style>
+    :root{
+      --ink:#1a1a1a;
+      --muted:#666;
+      --bg:#ffffff;
+      --link:#0b57d0;
+      --soft:#e9eefb;
+      --border:#e6e6e6;
+    }
+    body{
+      margin:0;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+      background:var(--bg);
+      color:var(--ink);
+      display:grid;
+      place-items:center;
+      min-height:100vh;
+    }
+    .card{
+      width:min(860px, 92vw);
+      padding:48px 24px 64px;
+      text-align:center;
+    }
+    .title{
+      font-size:64px;
+      letter-spacing:0.22em;
+      font-weight:600;
+      margin:18px 0 10px;
+    }
+    .subtle{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--muted);
+      font-size:14px;
+      margin: 10px auto 0;
+      max-width: 56ch;
+      line-height:1.45;
+    }
+    .login-area{
+      margin-top:44px;
+      display:grid;
+      place-items:center;
+      gap:18px;
+    }
+    .login-trigger{
+      appearance:none;
+      border:0;
+      background:transparent;
+      font: inherit;
+      padding:10px 14px;
+      letter-spacing:0.35em;
+      text-transform:uppercase;
+      font-size:26px;
+      color:var(--ink);
+      cursor:default;
+      border-radius:12px;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+      outline: none;
+    }
+    .login-trigger:hover,
+    .login-trigger:focus-visible,
+    .login-trigger[data-hot="true"]{
+      cursor:pointer;
+      color:var(--link);
+      background:var(--soft);
+      transform: translateY(-1px);
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      text-decoration-thickness: 2px;
+    }
+    .panel{
+      width:min(520px, 92vw);
+      border-radius:16px;
+      border:1px solid var(--border);
+      padding:18px 18px 16px;
+      text-align:left;
+      display:none;
+      background:#fff;
+    }
+    .panel[aria-hidden="false"]{ display:block; }
+
+    .prompt{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size:14px;
+      color:var(--muted);
+      margin:0 0 12px;
+      line-height:1.35;
+    }
+    .grid{
+      display:grid;
+      gap:10px;
+    }
+    @media (min-width: 520px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+    label{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size:12px;
+      color:var(--muted);
+      display:block;
+      margin:0 0 6px;
+      letter-spacing:0.02em;
+    }
+    input{
+      width:100%;
+      box-sizing:border-box;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid #d9d9d9;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size:16px;
+      outline:none;
+    }
+    input:focus{
+      border-color:#9bb8ff;
+      box-shadow:0 0 0 4px rgba(11,87,208,0.10);
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top:12px;
+    }
+    .btn{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-size:14px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid #d9d9d9;
+      background:#fff;
+      cursor:pointer;
+    }
+    .btn.primary{
+      border-color: transparent;
+      background: var(--link);
+      color:#fff;
+    }
+    .greeting{
+      margin-top:18px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--muted);
+      font-size:14px;
+      min-height: 1.3em;
+    }
+    @media (prefers-reduced-motion: reduce){
+      .login-trigger{ transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card" aria-label="DISTANTS Welcome Home">
+    <div class="title">WELCOME HOME</div>
+    <p class="subtle">
+      DISTANTS is a calm, nonprofit-intended public-benefit concierge resource.
+      It helps you orient, remember, and decide—at your pace.
+    </p>
+
+    <section class="login-area" aria-label="Login">
+      <button id="loginTrigger" class="login-trigger" type="button" aria-expanded="false" aria-controls="loginPanel">
+        L O G I N
+      </button>
+
+      <div id="loginPanel" class="panel" aria-hidden="true">
+        <p class="prompt">
+          Please tell me who you are — a name is enough, a user number is optional.
+        </p>
+
+        <form id="loginForm" autocomplete="on">
+          <div class="grid">
+            <div>
+              <label for="displayName">Name (or nickname)</label>
+              <input id="displayName" name="displayName" autocomplete="name" />
+            </div>
+            <div>
+              <label for="userId">User # (optional)</label>
+              <input id="userId" name="userId" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="button" id="cancelBtn">Cancel</button>
+            <button class="btn primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="greeting" class="greeting" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script>
+    const loginTrigger = document.getElementById('loginTrigger');
+    const loginPanel   = document.getElementById('loginPanel');
+    const loginForm    = document.getElementById('loginForm');
+    const cancelBtn    = document.getElementById('cancelBtn');
+    const greetingEl   = document.getElementById('greeting');
+    const displayName  = document.getElementById('displayName');
+    const userId       = document.getElementById('userId');
+
+    function openPanel() {
+      loginPanel.setAttribute('aria-hidden', 'false');
+      loginTrigger.setAttribute('aria-expanded', 'true');
+      setTimeout(() => displayName.focus(), 0);
+    }
+
+    function closePanel() {
+      loginPanel.setAttribute('aria-hidden', 'true');
+      loginTrigger.setAttribute('aria-expanded', 'false');
+      greetingEl.textContent = '';
+      loginTrigger.focus();
+    }
+
+    loginTrigger.addEventListener('click', () => {
+      const isOpen = loginTrigger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) closePanel();
+      else openPanel();
+    });
+
+    cancelBtn.addEventListener('click', closePanel);
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = displayName.value.trim();
+      const id   = userId.value.trim();
+      if (!name && !id){
+        greetingEl.textContent = "Please enter a name or user number.";
+        return;
+      }
+      greetingEl.textContent = name ? `Welcome, ${name}.` : `Welcome.`;
+      closePanel();
+    });
+  </script>
+</body>
+</html>
