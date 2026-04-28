@@ -1,118 +1,238 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DISTANTS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DISTANTS</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: linear-gradient(135deg, #101820, #1f3a33);
+    color: #f4f1e8;
+  }
 
-    .panel {
-      text-align: center;
-    }
+  .top {
+    text-align: center;
+    padding: 28px 12px 10px;
+  }
 
-    button {
-      margin: 5px;
-      padding: 10px;
-      font-size: 16px;
-    }
+  .login {
+    letter-spacing: 10px;
+    opacity: .65;
+    cursor: pointer;
+    transition: .4s;
+  }
 
-    textarea {
-      font-size: 16px;
-      padding: 10px;
+  .login:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  #identityBox {
+    display: none;
+    margin-top: 15px;
+  }
+
+  input, textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 80%;
+    max-width: 420px;
+    font-size: 16px;
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .panel {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 18px;
+    padding: 18px;
+    min-height: 300px;
+  }
+
+  .panel h2 {
+    text-align: center;
+    font-weight: normal;
+    font-size: 20px;
+  }
+
+  button {
+    margin: 6px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,.85);
+    color: #102018;
+    font-size: 15px;
+  }
+
+  button:hover {
+    background: white;
+  }
+
+  .quiet {
+    opacity: .75;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .trace {
+    margin-top: 10px;
+    padding: 10px;
+    border-left: 3px solid rgba(255,255,255,.35);
+    background: rgba(255,255,255,.06);
+  }
+
+  @media (max-width: 800px) {
+    .workspace {
+      grid-template-columns: 1fr;
     }
-  </style>
+  }
+</style>
 </head>
 
 <body>
 
-  <!-- PANEL -->
-  <div class="panel">
-    <textarea id="entryBox" style="width:80%; height:100px;"></textarea>
+<div class="top">
+  <div class="login" onclick="showIdentity()">L O G I N</div>
 
+  <div id="identityBox">
+    <input id="identity" placeholder="Name or User #">
     <br><br>
+    <button onclick="recognize()">Enter</button>
+    <div id="welcome" class="quiet"></div>
+  </div>
+</div>
 
-    <button onclick="insertDot()">•</button>
+<div class="workspace">
+
+  <div class="panel">
+    <h2>Input</h2>
+    <textarea id="entryBox" rows="8"></textarea>
+    <br><br>
+    <button onclick="insertMark()">•</button>
     <button onclick="insertLine()">—</button>
     <button onclick="clearBox()">□</button>
-
     <button onclick="goBack()">←</button>
-    <button onclick="goForward()">→</button>
-
-    <button onclick="processInput()">→</button>
   </div>
 
-  <!-- RESPONSE AREA -->
-  <div id="responseArea" style="
-    margin-top:20px;
-    min-height:60px;
-    border-top:1px solid rgba(0,0,0,0.1);
-  "></div>
+  <div class="panel">
+    <h2>Presence</h2>
+    <p class="quiet" id="presence">
+      …
+    </p>
+    <button onclick="respond()">→</button>
+    <button onclick="showCorpus('doctrine')">Doctrines</button>
+    <button onclick="showCorpus('conduct')">Conduct</button>
+    <button onclick="showCorpus('voice')">Voice</button>
+    <button onclick="showCorpus('service')">Service</button>
+  </div>
 
-  <!-- SCRIPT (ALL BEHAVIOR) -->
-  <script>
-    let history = [];
-    let future = [];
+  <div class="panel">
+    <h2>Result</h2>
+    <div id="resultArea" class="quiet"></div>
+  </div>
 
-    function saveState() {
-      const box = document.getElementById("entryBox");
-      history.push(box.value);
-      future = [];
-    }
+</div>
 
-    function insertDot() {
-      saveState();
-      const box = document.getElementById("entryBox");
-      box.value += ". ";
-    }
+<script>
+let history = [];
 
-    function insertLine() {
-      saveState();
-      const box = document.getElementById("entryBox");
-      box.value += "\n";
-    }
+function showIdentity() {
+  document.getElementById("identityBox").style.display = "block";
+}
 
-    function clearBox() {
-      saveState();
-      document.getElementById("entryBox").value = "";
-    }
+function recognize() {
+  const name = document.getElementById("identity").value.trim();
+  const welcome = document.getElementById("welcome");
 
-    function goBack() {
-      const box = document.getElementById("entryBox");
-      if (history.length > 0) {
-        future.push(box.value);
-        box.value = history.pop();
-      }
-    }
+  if (name) {
+    localStorage.setItem("distants_identity", name);
+    welcome.innerText = "Welcome back, " + name + ".";
+  } else {
+    welcome.innerText = "You’re in the right place.";
+  }
+}
 
-    function goForward() {
-      const box = document.getElementById("entryBox");
-      if (future.length > 0) {
-        history.push(box.value);
-        box.value = future.pop();
-      }
-    }
+window.onload = function() {
+  const saved = localStorage.getItem("distants_identity");
+  if (saved) {
+    document.getElementById("identityBox").style.display = "block";
+    document.getElementById("welcome").innerText = "Welcome back, " + saved + ".";
+  }
+};
 
-    function processInput() {
-      const box = document.getElementById("entryBox");
-      let text = box.value.trim();
+function saveState() {
+  history.push(document.getElementById("entryBox").value);
+}
 
-      if (!text) text = "...";
+function insertMark() {
+  saveState();
+  document.getElementById("entryBox").value += "• ";
+}
 
-      const area = document.getElementById("responseArea");
+function insertLine() {
+  saveState();
+  document.getElementById("entryBox").value += "\n";
+}
 
-      const entry = document.createElement("div");
-      entry.style.padding = "8px";
-      entry.style.marginTop = "5px";
-      entry.style.border = "1px solid rgba(0,0,0,0.1)";
-      entry.innerText = text;
+function clearBox() {
+  saveState();
+  document.getElementById("entryBox").value = "";
+}
 
-      area.appendChild(entry);
-    }
-  </script>
+function goBack() {
+  if (history.length > 0) {
+    document.getElementById("entryBox").value = history.pop();
+  }
+}
+
+function respond() {
+  const text = document.getElementById("entryBox").value.trim();
+  const result = document.getElementById("resultArea");
+
+  if (!text) {
+    result.innerHTML = "<div class='trace'>…</div>";
+    return;
+  }
+
+  result.innerHTML +=
+    "<div class='trace'>" +
+    "Received.<br><br>" +
+    text +
+    "<br><br><em>A next usable form can be shaped from this.</em>" +
+    "</div>";
+}
+
+function showCorpus(section) {
+  const presence = document.getElementById("presence");
+
+  const corpus = {
+    doctrine:
+      "Gentle Presence. Surgical Readiness. Temporary-first design. Opportunity without choice guidance.",
+
+    conduct:
+      "Dignity. Non-coercion. Neutral examples. No preference-display. Help without dominance.",
+
+    voice:
+      "Experience, Knowledge and Wisdom Voice. A short pause before speaking. First words slightly quieter. Slow cadence at start; slightly quicker later.",
+
+    service:
+      "Recognition before access. Concierge posture. Mechanics revealed by action. Use remains undefined until brought by the user."
+  };
+
+  presence.innerText = corpus[section];
+}
+</script>
 
 </body>
 </html>
