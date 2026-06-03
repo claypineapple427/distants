@@ -1,236 +1,236 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DISTANTS</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DISTANTS — Welcome Home</title>
 <style>
   body {
     margin: 0;
     font-family: Georgia, serif;
-    background: linear-gradient(135deg, #101820, #1f3a33);
-    color: #f4f1e8;
+    background: #f4efe6;
+    color: #2f2a22;
+    padding-bottom: 90px;
   }
 
-  .top {
+  header {
     text-align: center;
-    padding: 28px 12px 10px;
+    padding: 40px 20px 20px;
+    background: #e6dccb;
+    border-bottom: 1px solid #c8bda8;
   }
 
-  .login {
-    letter-spacing: 10px;
-    opacity: .65;
-    cursor: pointer;
-    transition: .4s;
+  header h1 {
+    margin: 0;
+    font-size: 2.4em;
+    letter-spacing: 0.08em;
   }
 
-  .login:hover {
-    opacity: 1;
-    text-decoration: underline;
-  }
-
-  #identityBox {
-    display: none;
-    margin-top: 15px;
-  }
-
-  input, textarea {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    width: 80%;
-    max-width: 420px;
-    font-size: 16px;
-  }
-
-  .workspace {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
-    gap: 14px;
-    padding: 20px;
-  }
-
-  .panel {
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.16);
-    border-radius: 18px;
-    padding: 18px;
-    min-height: 300px;
-  }
-
-  .panel h2 {
-    text-align: center;
-    font-weight: normal;
-    font-size: 20px;
-  }
-
-  button {
-    margin: 6px;
-    padding: 10px 14px;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    background: rgba(255,255,255,.85);
-    color: #102018;
-    font-size: 15px;
-  }
-
-  button:hover {
-    background: white;
-  }
-
-  .quiet {
-    opacity: .75;
-    font-size: 15px;
-    line-height: 1.5;
-  }
-
-  .trace {
+  header p {
+    font-size: 1.1em;
     margin-top: 10px;
-    padding: 10px;
-    border-left: 3px solid rgba(255,255,255,.35);
-    background: rgba(255,255,255,.06);
   }
 
-  @media (max-width: 800px) {
-    .workspace {
-      grid-template-columns: 1fr;
-    }
+  .room {
+    display: none;
+    padding: 25px;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .room.active {
+    display: block;
+  }
+
+  .card {
+    background: #fffaf0;
+    border: 1px solid #d5c8b0;
+    border-radius: 14px;
+    padding: 22px;
+    margin: 18px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .card h2 {
+    margin-top: 0;
+  }
+
+  .shelf {
+    border: 1px dashed #b6a88f;
+    background: #fbf6eb;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 12px;
+  }
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2f2a22;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 4px;
+    z-index: 99;
+  }
+
+  .bottom-nav button {
+    background: none;
+    color: #f4efe6;
+    border: none;
+    font-size: 0.82em;
+    padding: 8px 6px;
+    cursor: pointer;
+  }
+
+  .bottom-nav button span {
+    display: block;
+    font-size: 1.5em;
+  }
+
+  .bottom-nav button:hover {
+    color: #ffd27d;
+  }
+
+  .workshop {
+    border: 2px solid #8b6f3d;
+    background: #f7edd8;
+  }
+
+  .notice {
+    font-style: italic;
+    color: #5a4d3a;
   }
 </style>
 </head>
 
 <body>
 
-<div class="top">
-  <div class="login" onclick="showIdentity()">L O G I N</div>
+<header>
+  <h1>DISTANTS</h1>
+  <p>Welcome Home</p>
+  <p class="notice">A place for guidance, continuity, comfort, and useful next steps.</p>
+</header>
 
-  <div id="identityBox">
-    <input id="identity" placeholder="Name or User #">
-    <br><br>
-    <button onclick="recognize()">Enter</button>
-    <div id="welcome" class="quiet"></div>
-  </div>
-</div>
+<main>
 
-<div class="workspace">
-
-  <div class="panel">
-    <h2>Input</h2>
-    <textarea id="entryBox" rows="8"></textarea>
-    <br><br>
-    <button onclick="insertMark()">•</button>
-    <button onclick="insertLine()">—</button>
-    <button onclick="clearBox()">□</button>
-    <button onclick="goBack()">←</button>
-  </div>
-
-  <div class="panel">
-    <h2>Presence</h2>
-    <p class="quiet" id="presence">
-      …
+<section id="home" class="room active">
+  <div class="card">
+    <h2>Welcome Home</h2>
+    <p>
+      DISTANTS is being built as a calm, useful, and humane place for people who may need guidance,
+      reassurance, reminders, resources, or simply a better way to find their next step.
     </p>
-    <button onclick="respond()">→</button>
-    <button onclick="showCorpus('doctrine')">Doctrines</button>
-    <button onclick="showCorpus('conduct')">Conduct</button>
-    <button onclick="showCorpus('voice')">Voice</button>
-    <button onclick="showCorpus('service')">Service</button>
+    <div class="shelf">
+      <strong>Empty shelf:</strong> This front room will later hold the primary welcome message,
+      short introduction, and first-action guidance.
+    </div>
   </div>
+</section>
 
-  <div class="panel">
-    <h2>Result</h2>
-    <div id="resultArea" class="quiet"></div>
+<section id="companion" class="room">
+  <div class="card">
+    <h2>Companion</h2>
+    <p>
+      This room is reserved for the DISTANTS Companion concept: gentle guidance, task support,
+      reminders, and user-centered assistance.
+    </p>
+    <div class="shelf">
+      <strong>Future contents:</strong> Companion greeting, user guidance, reminder support,
+      and voice-friendly instructions.
+    </div>
   </div>
+</section>
 
-</div>
+<section id="shield" class="room">
+  <div class="card">
+    <h2>Senior Shield</h2>
+    <p>
+      Senior Shield is intended to help identify benefits, deadlines, exemptions, expense drift,
+      and practical protections for seniors and fixed-income users.
+    </p>
+    <div class="shelf">
+      <strong>Future contents:</strong> benefit reminders, senior relief resources, fraud alerts,
+      renewal checks, and financial stability notes.
+    </div>
+  </div>
+</section>
+
+<section id="leverage" class="room">
+  <div class="card">
+    <h2>LEVERAGE Library</h2>
+    <p>
+      LEVERAGE is the curated resource library: links, references, agencies, emergency resources,
+      recovery tools, and trusted public information.
+    </p>
+    <div class="shelf">
+      <strong>Future contents:</strong> CDC, NIH, FEMA, Red Cross, SAMHSA, NAMI, OSHA,
+      university, and government resource links.
+    </div>
+  </div>
+</section>
+
+<section id="records" class="room">
+  <div class="card">
+    <h2>Notes / Records</h2>
+    <p>
+      This room will hold reusable notes, completed items, project records, logs, and preserved
+      observations that may later become part of the DISTANTS blueprint.
+    </p>
+    <div class="shelf">
+      <strong>Future contents:</strong> boilerplate corpus, project notes, completed tasks,
+      reusable text, and indexed records.
+    </div>
+  </div>
+</section>
+
+<section id="workshop" class="room">
+  <div class="card workshop">
+    <h2>Workshop / Operations</h2>
+    <p>
+      This is the back-office area for operational tools. Public users do not need this room.
+      GWIZ, publishing, testing, enrollment, maintenance, and administrative utilities may live here.
+    </p>
+    <div class="shelf">
+      <strong>Future contents:</strong> GWIZ, publishing queue, content intake, testing notes,
+      administrative tools, and maintenance logs.
+    </div>
+  </div>
+</section>
+
+<section id="about" class="room">
+  <div class="card">
+    <h2>About DISTANTS</h2>
+    <p>
+      DISTANTS is a growing effort to preserve helpful guidance, reduce confusion, support continuity,
+      and create a welcoming place for those who may need assistance.
+    </p>
+    <div class="shelf">
+      <strong>Future contents:</strong> mission statement, doctrine, founders note,
+      purpose summary, and public explanation.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="bottom-nav">
+  <button onclick="showRoom('home')"><span>🏠</span>Home</button>
+  <button onclick="showRoom('companion')"><span>🌿</span>Companion</button>
+  <button onclick="showRoom('shield')"><span>🛡️</span>Shield</button>
+  <button onclick="showRoom('leverage')"><span>📚</span>Library</button>
+  <button onclick="showRoom('records')"><span>📝</span>Records</button>
+  <button onclick="showRoom('workshop')"><span>🔧</span>Workshop</button>
+  <button onclick="showRoom('about')"><span>ℹ️</span>About</button>
+</nav>
 
 <script>
-let history = [];
-
-function showIdentity() {
-  document.getElementById("identityBox").style.display = "block";
-}
-
-function recognize() {
-  const name = document.getElementById("identity").value.trim();
-  const welcome = document.getElementById("welcome");
-
-  if (name) {
-    localStorage.setItem("distants_identity", name);
-    welcome.innerText = "Welcome back, " + name + ".";
-  } else {
-    welcome.innerText = "You’re in the right place.";
-  }
-}
-
-window.onload = function() {
-  const saved = localStorage.getItem("distants_identity");
-  if (saved) {
-    document.getElementById("identityBox").style.display = "block";
-    document.getElementById("welcome").innerText = "Welcome back, " + saved + ".";
-  }
-};
-
-function saveState() {
-  history.push(document.getElementById("entryBox").value);
-}
-
-function insertMark() {
-  saveState();
-  document.getElementById("entryBox").value += "• ";
-}
-
-function insertLine() {
-  saveState();
-  document.getElementById("entryBox").value += "\n";
-}
-
-function clearBox() {
-  saveState();
-  document.getElementById("entryBox").value = "";
-}
-
-function goBack() {
-  if (history.length > 0) {
-    document.getElementById("entryBox").value = history.pop();
-  }
-}
-
-function respond() {
-  const text = document.getElementById("entryBox").value.trim();
-  const result = document.getElementById("resultArea");
-
-  if (!text) {
-    result.innerHTML = "<div class='trace'>…</div>";
-    return;
-  }
-
-  result.innerHTML +=
-    "<div class='trace'>" +
-    "Received.<br><br>" +
-    text +
-    "<br><br><em>A next usable form can be shaped from this.</em>" +
-    "</div>";
-}
-
-function showCorpus(section) {
-  const presence = document.getElementById("presence");
-
-  const corpus = {
-    doctrine:
-      "Gentle Presence. Surgical Readiness. Temporary-first design. Opportunity without choice guidance.",
-
-    conduct:
-      "Dignity. Non-coercion. Neutral examples. No preference-display. Help without dominance.",
-
-    voice:
-      "Experience, Knowledge and Wisdom Voice. A short pause before speaking. First words slightly quieter. Slow cadence at start; slightly quicker later.",
-
-    service:
-      "Recognition before access. Concierge posture. Mechanics revealed by action. Use remains undefined until brought by the user."
-  };
-
-  presence.innerText = corpus[section];
+function showRoom(roomId) {
+  const rooms = document.querySelectorAll('.room');
+  rooms.forEach(room => room.classList.remove('active'));
+  document.getElementById(roomId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
 
